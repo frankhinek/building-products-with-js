@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
   res.send('Hello world!');
 });
 
-// catch all unhandler errors
-app.use((err, req, res) => {
-  logger.error(err.stack);
+// catch all unhandled errors
+app.use((err, req, res, next) => {
+  logger.error('unhandled application error: ', err);
   res.status(500).send(err);
 });
 
