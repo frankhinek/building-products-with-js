@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/frankhinek/building-products-with-js#readme",
   "devDependencies": {
+    "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
     "babel-preset-es2015-node": "^6.1.0",
