@@ -33,7 +33,7 @@ app.use(session({
 }));
 
 // add passport js
-app.use(passport.initializat());
+app.use(passport.initialize());
 app.use(passport.session());
 
 // test method
