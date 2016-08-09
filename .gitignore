@@ -39,3 +39,6 @@ jspm_packages
 
 # Mac file system artifacts
 .DS_Store
+
+# Database related files
+server/db/
