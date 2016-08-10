@@ -1,36 +1,33 @@
 // npm packages
 import test from 'tape';
-import request from 'supertest';
 
 // our packages
-import app from '../src/app';
+import { db as dbConfig } from '../config';
+import { thinky, r } from '../src/db';
 
-test('GET /', (t) => {
-  request(app)
-    .get('/')
-    .expect(200)
-    .expect('Content-Type', /text\/html/)
-    .end((err, res) => {
-      const expectedBody = 'Hello world!';
-      const actualBody = res.text;
+// tests
+import core from './core';
+import register from './register';
+import login from './login';
 
-      t.error(err, 'No error');
-      t.equal(actualBody, expectedBody, 'Retrieve body');
+export default (reqlite) => {
+  thinky.dbReady().then(() => {
+    // clean the database
+    test(async (t) => {
+      await r.db(dbConfig.db).table('User').delete();
       t.end();
     });
-});
 
-test('Return 404 on nonexistant URL', (t) => {
-  request(app)
-    .get('/GETShouldFailOnNonExistantURL')
-    .expect(404)
-    .expect('Content-Type', /text\/html/)
-    .end((err, res) => {
-      const expectedBody = 'Cannot GET /GETShouldFailOnNonExistantURL\n';
-      const actualBody = res.text;
+    // execute tests
+    core(test);
+    register(test);
+    login(test);
 
-      t.error(err, 'No error');
-      t.equal(actualBody, expectedBody, 'Retrieve body');
+    // close db connections
+    test((t) => {
+      setImmediate(() => r.getPoolMaster().drain());
+      reqlite.kill();
       t.end();
     });
-});
+  });
+};

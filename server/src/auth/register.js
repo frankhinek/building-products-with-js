@@ -9,7 +9,7 @@ export default (app) => {
 
     // verify the same password was entered and confirmed
     if (password !== passwordRepeat) {
-      res.status(400).send({ error: 'Passwords do not match' });
+      res.status(400).send({ error: 'Passwords do not match!' });
       return;
     }
 
