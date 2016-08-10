@@ -25,7 +25,7 @@ export default (test) => {
     request(app)
       .post('/api/login')
       .send({ login: 'test', password: 'aaa' })
-      .expect(999)// (401)
+      .expect(401)
       .end((err) => {
         t.error(err, 'No error');
         t.end();
@@ -36,7 +36,7 @@ export default (test) => {
     request(app)
       .post('/api/login')
       .send({ login: 'donotexist', password: '123' })
-      .expect(999)// (401)
+      .expect(401)
       .end((err) => {
         t.error(err, 'No error');
         t.end();
